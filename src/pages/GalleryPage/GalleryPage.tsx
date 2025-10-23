@@ -1,9 +1,30 @@
-export default function GalleryPage() {
-    return (
-        <div>
-            <h1>Gallery Page</h1>
-            {/* <h1 style={{fontSize: '3rem', textAlign: 'center', marginTop: '5rem' }}>Masonry Grid</h1> */}
-            <a href="/photo/1">Go to photo page</a>
+import { useEffect, useState } from 'react';
+import { fetchPhotos } from '../../api/pexels';
+import type { Photo } from '../../utils/types';
+
+const GalleryPage = () => {
+const [photos, setPhotos] = useState<Photo[]>([]);
+
+  useEffect(() => {
+    fetchPhotos('Portugal')
+    .then(setPhotos)
+  }, []);
+
+  return (
+    <div>
+        <h1>Gallery Page</h1>
+
+        <div style={{columnCount: 5}}>
+        {photos.map(photo => (
+            <a href={`/photo/${photo.id}`} 
+            target="_blank"
+            key={photo.id}>
+                <img src={photo.src.medium} alt={photo.title} style={{ width: '100%' }} />
+            </a>
+        ))}
         </div>
-    )
-}
+    </div>
+  );
+};
+
+export default GalleryPage;
