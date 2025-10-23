@@ -1,9 +1,13 @@
-function App() {
+import { Routes, Route } from 'react-router-dom';
+import GalleryPage from './pages/GalleryPage';
+import PhotoPage from './pages/PhotoPage';
 
+function App() {
   return (
-    <>
-     <h1 style={{fontSize: '3rem', textAlign: 'center', marginTop: '5rem' }}>Masonry Grid</h1>
-    </>
+     <Routes>
+      <Route path="/" element={<GalleryPage />} />
+      <Route path="/photo/:id" element={<PhotoPage />} />
+     </Routes>
   )
 }
 
