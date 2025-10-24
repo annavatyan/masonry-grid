@@ -1,7 +1,15 @@
 export interface Photo {
     id: number;
+    alt: string;
+    photographer: string;
+    photographer_url: string;
     src: {
-        medium: string;
+      original: string;
+      large2x: string;
+      large: string;
+      medium: string;
     };
-    title: string;
-}
+    width: number;
+    height: number;
+    url: string;
+  }
