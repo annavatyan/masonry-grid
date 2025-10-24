@@ -9,6 +9,7 @@ A high-performance React + TypeScript app with a masonry photo grid and detailed
 - React Router (for page navigation)
 - Vitest + Testing Library (for testing)
 - a11y-jsx (for accessibility checks)
+- Tailwind CSS (for fast and responsive styling)
 
 ## Project setup and run
 
