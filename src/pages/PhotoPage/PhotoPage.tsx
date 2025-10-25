@@ -1,8 +1,22 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
+import useFetchPhotoById from "../../hooks/useFetchPhotoById";
+import type { Photo } from "../../utils/types";
 
 export default function PhotoPage() {
     const location = useLocation();
-    const photo = location.state.photo;
+    const { id } = useParams<{id: string}>();
+
+    const initialPhoto: Photo | null = location.state?.photo || null;
+
+    const { photo: fetchedPhoto, loading, error } = 
+          !initialPhoto ? useFetchPhotoById(id!) : 
+          { photo: null, loading: false, error: null };
+
+    const photo = initialPhoto || fetchedPhoto;
+    
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+    if (!photo) return <p>Photo not found</p>;
 
     return (
         <div className="container mx-auto px-4">

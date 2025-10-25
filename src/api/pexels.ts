@@ -24,3 +24,22 @@ export const fetchPhotos = async (query: string, perPage = 20, page = 1): Promis
 
   return data.photos;
 };
+
+export const fetchPhotoById= async (id: string): Promise<Photo> => {
+  const res = await fetch(
+    `${PEXELS_API_URL}/photos/${id}`,
+    {
+      headers: {
+        Authorization: PEXELS_API_KEY,
+      },
+    }
+  )
+
+  if (!res.ok) {
+    throw new Error(`Error: ${res.status} ${res.statusText}`);
+  }
+
+  const data = await res.json();
+
+  return data;
+};
