@@ -1,4 +1,5 @@
 import { Link, useLocation, useParams } from "react-router-dom";
+import { preload } from "react-dom";
 import useFetchPhotoById from "../../hooks/useFetchPhotoById";
 import type { Photo } from "../../utils/types";
 
@@ -13,6 +14,11 @@ export default function PhotoPage() {
           { photo: null, loading: false, error: null };
 
     const photo = initialPhoto || fetchedPhoto;
+
+    // Preload image to increase LCP
+    if (photo?.src?.large2x) {
+        preload(photo.src.large2x, { as: "image" });
+    }
     
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -23,7 +29,7 @@ export default function PhotoPage() {
             <nav className="flex justify-between my-4" aria-label="Go back to gallery page">
                 <Link 
                     to="/" 
-                    className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-700 hover:underline rounded px-1 transition-colors"
+                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 hover:underline rounded px-1 transition-colors"
                 >
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
@@ -58,15 +64,21 @@ export default function PhotoPage() {
             </nav>
            
             <article className="mb-20">
-                <figure className="mb-8">
+                <figure className="mb-8 flex">
+                    <div className="m-auto"
+                         style={{ aspectRatio: photo.width / photo.height }}>
                     <img
-                        className="mx-auto object-cover"
+                        className="mx-auto object-cover h-full
+                                   opacity-0 transition-opacity duration-700 ease-out "
+                        onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
                         src={photo.src.large}
                         srcSet={`${photo.src.large} 1x, ${photo.src.large2x} 2x`}
                         sizes="(max-width: 1248px) 100vw, 1248px"
                         alt={photo.alt || "Photo"}
-                        loading="lazy"
+                        fetchPriority="high"
+                        decoding="async"
                     />
+                    </div>
                 </figure>
 
                 <figcaption className="text-gray-500">
@@ -77,7 +89,7 @@ export default function PhotoPage() {
                             href={photo.photographer_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-500 hover:text-blue-700 hover:underline"
+                            className="text-blue-600 hover:text-blue-700 hover:underline"
                         >
                             {photo.photographer} ↗
                         </a>
