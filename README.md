@@ -42,3 +42,12 @@ npm run test
 
 ```bash
 npm run build
+
+## Performance Optimizations
+ 
+###  Photo Page
+preload() - Start LCP image fetch early | Faster LCP
+fetchPriority="high"- Prioritize main image | Faster render
+decoding="async"- Non-blocking image decode | Smoother paint
+Fade-in transition - Visual polish | No “jump-in” effect 
+aspect-ratio - Reserve layout space before image loads | Prevent CLS without width/height
