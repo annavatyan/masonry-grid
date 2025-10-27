@@ -27,7 +27,7 @@ const useFetchPhotos = (query: string, perPage = GRID_PER_PAGE) => {
     setPage(1);
   }, [query]);
 
-  const loadMore = useCallback(() => setPage(prev => prev + 1), []);
+  const loadMore = () => setPage(prev => prev + 1);
 
   return { photos, loading, error, loadMore };
 };

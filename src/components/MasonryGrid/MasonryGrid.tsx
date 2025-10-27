@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef } from 'react';
 import useFetchPhotos from '../../hooks/useFetchPhotos';
 import PhotoCard from './PhotoCard';
 import type { Photo } from "../../utils/types";
+import Spinner from '../Spinner';
+import StatusMessage from '../StatusMessage/StatusMessage';
 
 const MasonryGrid = ({searchTerm, columns}: {searchTerm: string, columns: number}) => {
   const { photos, loading, error, loadMore } = useFetchPhotos(searchTerm);
@@ -30,9 +32,11 @@ const MasonryGrid = ({searchTerm, columns}: {searchTerm: string, columns: number
         });
         return cols;
     }, [photos, columns]);
- 
-  if (error) return <p className="text-red-500 text-center">{error}</p>;
-  if (loading && !photos.length) return <p className="text-center">Loading...</p>;
+
+    if (loading && !photos.length) return <Spinner size="full" message="Loading photos..." />;
+    if (error) return <StatusMessage message={error} type="error" />;
+    if (!photos.length && !loading) return <StatusMessage message="No photos found." type="info" />;
+
 
   return (
     <div className="masonry-grid">
@@ -46,7 +50,7 @@ const MasonryGrid = ({searchTerm, columns}: {searchTerm: string, columns: number
         ))}
         </div>
 
-        {loading && <p className="text-center mt-4">Loading more...</p>}
+        {loading && photos.length > 0 && <Spinner size="inline" />}
 
         {/* Element for infinite scroll */}
         <div ref={loadMoreRef} className="h-2" />
