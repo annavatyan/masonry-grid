@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { fetchPhotos } from "../api/pexels";
+import { fetchPhotos } from "../utils/api";
 import type { Photo } from "../utils/types";
+import { GRID_PER_PAGE } from "../utils/constants";
 
-const useFetchPhotos = (query: string, perPage=20, page=1) => {
+const useFetchPhotos = (query: string, perPage=GRID_PER_PAGE, page=1) => {
     const [photos, setPhotos] = useState<Photo[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);

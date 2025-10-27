@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
-import useFetchPhotos from '../../hooks/useFetchPhotos';
 import SearchBar from '../../components/SearchBar';
 import { useState } from 'react';
+import MasonryGrid from '../../components/MasonryGrid';
+import { GRID_COLUMNS_COUNT } from '../../utils/constants';
 
 const GalleryPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("Portugal")
-  const { photos, loading, error } = useFetchPhotos(searchTerm);
 
   return (
     <div className='container mx-auto px-4'>
@@ -15,22 +14,7 @@ const GalleryPage = () => {
 
         <SearchBar value={searchTerm}  onChange={setSearchTerm}/>
 
-        {error && <p>Error - {error}</p>}
-
-        {loading && <p>Loading...</p>}
-
-        {!error && !loading && photos?.length &&
-            <div style={{columnCount: 5}}>
-                {photos.map(photo => (
-                    <Link to={`/photo/${photo.id}`} state={{ photo }}
-                    
-                    key={photo.id}>
-                        <img src={photo.src.medium} alt={photo.alt} style={{ width: '100%' }} />
-                    </Link>
-                ))}
-            </div>
-        }
-        
+        <MasonryGrid searchTerm={searchTerm} columns={GRID_COLUMNS_COUNT}/>
     </div>
   );
 };

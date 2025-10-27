@@ -1,10 +1,11 @@
-import type { Photo } from '../utils/types';
+import type { Photo } from './types';
 import { 
+  GRID_PER_PAGE,
   PEXELS_API_KEY, 
   PEXELS_API_URL 
-} from '../utils/constants'
+} from './constants'
 
-export const fetchPhotos = async (query: string, perPage = 20, page = 1): Promise<Photo[]> => {
+export const fetchPhotos = async (query: string, perPage = GRID_PER_PAGE, page = 1): Promise<Photo[]> => {
   const res = await fetch(
     `${PEXELS_API_URL}/search?query=${encodeURIComponent(
       query
