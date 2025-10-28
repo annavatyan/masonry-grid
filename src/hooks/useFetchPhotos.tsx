@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { fetchPhotos } from "../services/api";
 import type { Photo } from "../utils/types";
 import { GRID_PER_PAGE } from "../utils/constants";
@@ -33,8 +33,8 @@ const useFetchPhotos = (query: string, perPage = GRID_PER_PAGE) => {
     setPage(1);
   }, [query]);
 
-  const loadMore = () => setPage(prev => prev + 1);
-
+  const loadMore = useCallback(() => setPage(prev => prev + 1), []);
+  
   return { photos, loading, error, loadMore };
 };
 
