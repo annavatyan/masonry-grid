@@ -2,7 +2,7 @@ import { memo, useState } from "react";
 import { Link } from "react-router-dom";
 import type { Photo } from "../../utils/types";
 
-const loadedImages = new Set<string>();
+export const loadedImages = new Set<string>();
 
 const PhotoCard = memo(({ photo }: { photo: Photo }) => {
   const [loaded, setLoaded] = useState(loadedImages.has(photo.src.large2x));
