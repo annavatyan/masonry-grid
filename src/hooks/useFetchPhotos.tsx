@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { fetchPhotos } from "../utils/api";
+import { useEffect, useState } from "react";
+import { fetchPhotos } from "../services/api";
 import type { Photo } from "../utils/types";
 import { GRID_PER_PAGE } from "../utils/constants";
 
@@ -10,6 +10,12 @@ const useFetchPhotos = (query: string, perPage = GRID_PER_PAGE) => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
+    if (!query.trim()) {
+      setPhotos([]);
+      setError(null);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 

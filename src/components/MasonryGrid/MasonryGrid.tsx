@@ -39,22 +39,22 @@ const MasonryGrid = ({searchTerm, columns}: {searchTerm: string, columns: number
 
 
   return (
-    <div className="masonry-grid">
+    <section className="masonry-grid" aria-label="Photo Gallery">
         <div className="flex gap-4 justify-center items-start">
-        {distributed.map((col, idx) => (
-            <div key={idx} className="flex flex-col gap-4 w-full">
-            {col.map((photo) => (
-                <PhotoCard key={photo.id} photo={photo} />
-            ))}
-            </div>
-        ))}
+          {distributed.map((col, idx) => (
+              <div key={idx} className="flex flex-col gap-4 flex-1">
+              {col.map((photo) => (
+                  <PhotoCard key={photo.id} photo={photo} />
+              ))}
+              </div>
+          ))}
         </div>
 
         {loading && photos.length > 0 && <Spinner size="inline" />}
 
         {/* Element for infinite scroll */}
-        <div ref={loadMoreRef} className="h-2" />
-    </div>
+        <div ref={loadMoreRef} className="h-2" aria-hidden="true" tabIndex={0}/>
+    </section>
   );
 };
 

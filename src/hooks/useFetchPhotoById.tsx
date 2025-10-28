@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchPhotoById } from "../utils/api";
+import { fetchPhotoById } from "../services/api";
 import type { Photo } from "../utils/types";
 
 const useFetchPhotoById = (id: string) => {

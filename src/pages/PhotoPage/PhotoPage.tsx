@@ -1,10 +1,10 @@
+import { useMemo, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { preload } from "react-dom";
 import useFetchPhotoById from "../../hooks/useFetchPhotoById";
-import type { Photo } from "../../utils/types";
 import Spinner from "../../components/Spinner";
 import StatusMessage from "../../components/StatusMessage";
-import { useMemo } from "react";
+import type { Photo } from "../../utils/types";
 
 export default function PhotoPage() {
     const location = useLocation();
@@ -18,13 +18,15 @@ export default function PhotoPage() {
 
     const photo = initialPhoto || fetchedPhoto;
 
-    // Memoize large2x URL to avoid recalculating multiple times
+   // Memoize large2x URL
     const large2xUrl = useMemo(() => photo?.src.large2x || "", [photo?.src.large2x]);
 
-    // Preload image to improve LCP
-    if (large2xUrl) {
-        preload(large2xUrl, { as: "image" });
-    }
+    // Preload large2x image to improve LCP
+    useEffect(() => {
+        if (large2xUrl) {
+            large2xUrl && preload(large2xUrl, { as: "image" });
+        }
+    }, [large2xUrl]);
       
 
     return (
