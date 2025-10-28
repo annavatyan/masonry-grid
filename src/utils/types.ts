@@ -8,7 +8,8 @@ export interface Photo {
       large2x: string;
       large: string;
       medium: string;
-      small: string;
+      landscape: string;
+      portrait: string
     };
     width: number;
     height: number;

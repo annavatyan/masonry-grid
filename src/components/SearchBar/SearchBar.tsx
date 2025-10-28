@@ -12,7 +12,7 @@ export default function SearchBar({ value = "", onChange }: SearchBarProps) {
 
   useEffect(() => {
     if (debouncedInput !== value) {
-      onChange(debouncedInput);
+      onChange(debouncedInput.trim());
     }
   }, [debouncedInput, value, onChange]);
 

@@ -18,17 +18,18 @@ export default function PhotoPage() {
 
     const photo = initialPhoto || fetchedPhoto;
 
-   // Memoize large2x URL
-    const large2xUrl = useMemo(() => photo?.src.large2x || "", [photo?.src.large2x]);
+    // Determine best quality variant
+    const mainSrc = useMemo(() => {
+        if (!photo) return "";
+        
+        return photo.width >= photo.height ? photo.src.landscape : photo.src.portrait;
+    }, [photo]);
 
-    // Preload large2x image to improve LCP
+    // Preload chosen image for better LCP
     useEffect(() => {
-        if (large2xUrl) {
-            large2xUrl && preload(large2xUrl, { as: "image" });
-        }
-    }, [large2xUrl]);
+        if (mainSrc) preload(mainSrc, { as: "image" });
+    }, [mainSrc]);
       
-
     return (
         <main className="container mx-auto px-4">
             <nav className="flex justify-between my-4" aria-label="Go back to gallery page">
@@ -83,9 +84,7 @@ export default function PhotoPage() {
                             className="mx-auto object-cover h-full
                                     opacity-0 transition-opacity duration-700 ease-out "
                             onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
-                            src={photo.src.large}
-                            srcSet={`${photo.src.large} 1x, ${large2xUrl} 2x`}
-                            sizes="(max-width: 1248px) 100vw, 1248px"
+                            src={mainSrc}
                             alt={photo.alt || `Photo by ${photo.photographer}`}
                             fetchPriority="high"
                             decoding="async"

@@ -30,9 +30,8 @@ const PhotoCard = memo(({ photo }: { photo: Photo }) => {
             }`}
             onLoad={handleLoad}
             src={photo.src.large}
-            srcSet={`${photo.src.small} 0.5x, ${photo.src.large} 1x, ${photo.src.large2x} 2x`}
+            srcSet={`${photo.src.large} 1x, ${photo.src.large2x} 2x`}
             alt={photo.alt || `Photo by ${photo.photographer || "unknown photographer"}`}
-            loading="lazy"
             decoding="async"
             fetchPriority="low"
           />
