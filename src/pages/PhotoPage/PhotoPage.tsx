@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { preload } from "react-dom";
 import useFetchPhotoById from "../../hooks/useFetchPhotoById";
@@ -17,6 +17,8 @@ export default function PhotoPage() {
           { photo: null, loading: false, error: null };
 
     const photo = initialPhoto || fetchedPhoto;
+    
+    const [photoLoaded, setPhotoLoaded] = useState(false);
 
     // Determine best quality variant
     const mainSrc = useMemo(() => {
@@ -71,24 +73,26 @@ export default function PhotoPage() {
                 }
             </nav>
 
-            {loading && <Spinner size="full" message="Loading photo..." />}
+            {(loading || !photoLoaded) && <Spinner size="full" message="Loading photo..." />}
             {error && <StatusMessage type="error" message={error} />}
             {!loading && !error && !photo && <StatusMessage type="info" message="Photo not found" />}
 
             {!loading && !error && photo && (
                 <article className="mb-20">
                     <figure className="mb-8 flex">
-                        <div className="m-auto"
+                        <div className="relative m-auto"
                             style={{ aspectRatio: photo.width / photo.height }}>
-                        <img
-                            className="mx-auto object-cover h-full
-                                    opacity-0 transition-opacity duration-700 ease-out "
-                            onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
-                            src={mainSrc}
-                            alt={photo.alt || `Photo by ${photo.photographer}`}
-                            fetchPriority="high"
-                            decoding="async"
-                        />
+                            <img
+                                className={`mx-auto object-cover h-full
+                                        opacity-0 transition-opacity duration-700 ease-out ${
+                                            photoLoaded ? "opacity-100" : "opacity-0"
+                                          }`}
+                                onLoad={() => setPhotoLoaded(true)}
+                                src={mainSrc}
+                                alt={photo.alt || `Photo by ${photo.photographer}`}
+                                fetchPriority="high"
+                                decoding="async"
+                            />
                         </div>
                     </figure>
 

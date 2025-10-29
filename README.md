@@ -174,3 +174,6 @@ The app includes reusable components to ensure consistent UI behavior across pag
 ### Improved “Back to Gallery” Navigation
 - Preserve scroll position when returning from a photo page to the gallery.
 - Avoid full page refresh to make navigation feel seamless.
+
+### Skeleton Loading
+- Implement skeleton placeholders for photos while they are loading to improve perceived performance and reduce layout shifts.
