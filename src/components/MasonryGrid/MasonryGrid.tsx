@@ -114,7 +114,7 @@ const MasonryGrid = ({ searchTerm, columns:defaultColumns }: MasonryGridProps) =
         {loading && photos.length > 0 && <Spinner size="inline" />}
 
         {/* Element for infinite scroll */}
-        <div ref={loadMoreRef} className="h-2" aria-hidden="true" tabIndex={0}/>
+        <div ref={loadMoreRef} className="h-2" tabIndex={0}/>
     </section>
   );
 };

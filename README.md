@@ -63,6 +63,14 @@ The application is designed for performance, accessibility, and maintainability.
    
   > **NOTE :** Some Lighthouse versions may still report CLS issues because they don’t fully recognize the CSS `aspect-ratio` property.
 
+### Build Optimization
+
+**Lazy Loading**  
+PhotoPage is lazy-loaded using `Suspense`, which reduces the initial bundle size and speeds up the first meaningful render.
+
+**Chunking**  
+React and React Router are split into a separate vendor chunk for better caching and faster subsequent loads.
+
 ### Lighthouse
 
 The application has been tested and optimized using **Lighthouse** to ensure good web performance and accessibility:
