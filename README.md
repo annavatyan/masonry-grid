@@ -165,3 +165,12 @@ The app includes reusable components to ensure consistent UI behavior across pag
 
 - **Loading Handling:** `Spinner` provides visual feedback during data fetching without blocking the UI. Supports `full` and `inline` variants.  
 - **Error Handling:** `StatusMessage` displays informative messages for errors or empty states, ensuring users understand issues.  
+
+## Future Improvements
+
+### Quick View Popup
+- Add a modal or lightbox for quick preview of a photo directly from the masonry grid, without leaving the gallery.
+
+### Improved “Back to Gallery” Navigation
+- Preserve scroll position when returning from a photo page to the gallery.
+- Avoid full page refresh to make navigation feel seamless.

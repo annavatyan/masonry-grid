@@ -21,7 +21,7 @@ const PhotoCard = memo(({ photo }: { photo: Photo }) => {
         className="block w-full"
       >
         <div
-          className="w-full rounded-lg overflow-hidden"
+          className="relative w-full rounded-lg overflow-hidden"
           style={{ aspectRatio: photo.width / photo.height }}
         >
           <img
@@ -35,6 +35,10 @@ const PhotoCard = memo(({ photo }: { photo: Photo }) => {
             decoding="async"
             fetchPriority="low"
           />
+          <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 text-white">
+            <p className="text-sm">{photo.photographer}</p>
+            <p className="text-sm truncate ... overflow-hidden line-clamp-2">{photo.alt}</p>
+          </div>
         </div>
       </Link>
     </article>
