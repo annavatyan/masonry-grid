@@ -26,19 +26,26 @@ cd masonry-grid
 npm install
 ```
 
-3. Run the development server:
+3. Set up environment variables:
+
+This project uses the Pexels API.
+Create a .env file in the project root and add your API key:
+
+VITE_PEXELS_API_KEY=your_api_key_here
+
+4. Run the development server:
 
 ```bash
 npm run dev
 ```
 
-4. Run tests:
+5. Run tests:
 
 ```bash
 npm run test
 ```
 
-5. Build the app:
+6. Build the app:
 
 ```bash
 npm run build
